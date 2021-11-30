@@ -4,12 +4,10 @@ read -p "Enter Manifest Url: " x_manifest_url
 export manifest_url=$x_manifest_url
 read -p "Enter Rom Vendor Name : " x_vendor_name
 export rom_vendor_name=$x_vendor_name
-// define a variable with branch name
 read -p "Enter Branch Name : " x_branch_name
 export branch=$x_branch_name
 read -p "Enter Rom Name : " x_rom_name
 export rom=$x_rom_name
-// ask user for type of make command and export it to a variable
 read -p "Enter Make Command Type (Eg, bacon) : " x_make_type
 export bacon=$x_make_type
 echo "Starting real build now Sur"
