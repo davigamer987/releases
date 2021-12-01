@@ -8,6 +8,7 @@ read -p "Enter Branch Name : " x_branch_name
 export branch=$x_branch_name
 read -p "Enter Rom Name : " x_rom_name
 export rom=$x_rom_name
+export ROM_VERSION=$x_rom_name A12
 read -p "Enter Make Command Type (Eg, bacon) : " x_make_type
 export bacon=$x_make_type
 echo "Starting real build now Sur"
