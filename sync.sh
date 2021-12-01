@@ -28,6 +28,7 @@ if [ "${syncsuccessful}" == "0" ]; then
     mv lineage_TP1803.mk ${rom_vendor_name}_TP1803.mk
     sed -i "s+lineage+$rom_vendor_name+g" ${rom_vendor_name}_TP1803.mk
     sed -i "s+lineage+$rom_vendor_name+g" AndroidProducts.mk
+    echo "BUILD_BROKEN_ENFORCE_SYSPROP_OWNER := true" >> BoardConfig.mk
     cd ..
     cd ..
     cd ..
