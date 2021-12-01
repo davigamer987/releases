@@ -25,6 +25,7 @@ if [ "${syncsuccessful}" == "0" ]; then
     sed -i "s+android.hardware.power-ndk_platform+android.hardware.power-V1-ndk_platform+g" hardware/qcom-caf/sm8150/audio/hal/Android.mk
     telegram -N -M "Sync completed successfully in $((SYNC_DIFF / 60)) minute(s) and $((SYNC_DIFF % 60)) seconds"
     cd device/nubia/TP1803
+    mv lineage_TP1803.mk ${rom_vendor_name}_TP1803.mk
     sed -i "s+lineage+$rom_vendor_name+g" ${rom_vendor_name}_TP1803.mk
     sed -i "s+lineage+$rom_vendor_name+g" AndroidProducts.mk
     cd ..
