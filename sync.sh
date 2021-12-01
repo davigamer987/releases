@@ -30,8 +30,11 @@ if [ "${syncsuccessful}" == "0" ]; then
     cd ..
     cd ..
     FILE=vendor/$rom_vendor_name/config/common_full_phone.mk
-    [ -f $FILE ] && echo "$FILE exits, skipping." || sed -i "s+common_full_phone.mk+common.mk+g" device/nubia/TP1803/${rom_vendor_name}_TP1803.mk"
+    [ -f $FILE ] && echo "$FILE exits, skipping." || sed -i "s+common_full_phone.mk+common.mk+g" device/nubia/TP1803/${rom_vendor_name}_TP1803.mk
     source "${my_dir}/build.sh"
 else
+    echo "Sync failed in $((SYNC_DIFF / 60)) minute(s) and $((SYNC_DIFF % 60)) seconds"
+    telegram -N -M "Sync failed in $((SYNC_DIFF / 60)) minute(s) and $((SYNC_DIFF % 60)) seconds"
+    curl --data parse_mode=HTML --data chat_id=$TELEGRAM_CHAT --data sticker=CAADBQADGgEAAixuhBPbSa3YLUZ8DBYE --request POST https://api.telegram.org/bot$TELEGRAM_TOKEN/sendSticker
     exit 1
 fi
