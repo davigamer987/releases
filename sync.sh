@@ -30,6 +30,7 @@ if [ "${syncsuccessful}" == "0" ]; then
     sed -i "s+lineage+$rom_vendor_name+g" AndroidProducts.mk
     cd ..
     cd ..
+    cd ..
     FILE=vendor/$rom_vendor_name/config/common_full_phone.mk
     [ -f $FILE ] && echo "$FILE exits, skipping." || sed -i "s+common_full_phone.mk+common.mk+g" device/nubia/TP1803/${rom_vendor_name}_TP1803.mk
     source "${my_dir}/build.sh"
