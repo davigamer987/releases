@@ -12,7 +12,7 @@ export ROM_VERSION=A12
 read -p "Enter Make Command Type (Eg, bacon) : " x_make_type
 export bacon=$x_make_type
 echo "Starting real build now Sur"
-sudo mount --bind /home/helloitsmemairo123/.ccache /mnt/ccache
+sudo mount --bind ~/.ccache /mnt/ccache
 export USE_CCACHE=1
 export CCACHE_EXEC=/usr/bin/ccache
 export CCACHE_DIR=/mnt/ccache
