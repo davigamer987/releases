@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export outdir="${ROM_DIR}/out/target/product/${device}"
+export outdir="out/target/product/${device}"
 BUILD_START=$(date +"%s")
 echo "Build started for ${device}"
 if [ "${jenkins}" == "true" ]; then
@@ -56,9 +56,11 @@ if [ "${generate_incremental}" == "true" ]; then
     cp "${new_target_files_path}" "${ROM_DIR}"
 fi
 if [ -e "${outdir}"/*$(date +%Y)*.zip ]; then
-    export finalzip_path=$(ls "${outdir}"/*$(date +%Y)*.zip | tail -n -1)
+    echo "using date sys"
+    export finalzip_path=$(ls ${outdir}/*$(date +%Y)*.zip | tail -n -1)
 else
-    export finalzip_path=$(ls "${outdir}"/*"${device}"*.zip | tail -n -1)
+    echo "using device sys $(pwd)"
+    export finalzip_path=$(ls ${outdir}/*"${device}"*.zip | grep -E 'UNOFFICIAL|unofficial' | tail -n -1)
 fi
 if [ "${upload_recovery}" == "true" ]; then
     if [ ! -e "${outdir}"/recovery.img ]; then
