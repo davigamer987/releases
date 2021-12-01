@@ -30,13 +30,14 @@ else
     telegram -N -M "Sync failed in $((SYNC_DIFF / 60)) minute(s) and $((SYNC_DIFF % 60)) seconds"
     curl --data parse_mode=HTML --data chat_id=$TELEGRAM_CHAT --data sticker=CAADBQADGgEAAixuhBPbSa3YLUZ8DBYE --request POST https://api.telegram.org/bot$TELEGRAM_TOKEN/sendSticker
     cd device/nubia/TP1803
-    sed -i "s+lineage+$v+g" ${rom_vendor_name}_TP1803.mk
+    sed -i "s+lineage+$rom_vendor_name+g" ${rom_vendor_name}_TP1803.mk
     sed -i "s+lineage+$rom_vendor_name+g" AndroidProducts.mk
     cd ..
     cd ..
     FILE=vendor/$rom_vendor_name/config/common.mk
-if [[ -f "$FILE" ]]; then
-    sed -i "s+common_full_phone.mk+common.mk+g" ${v}_TP1803.mk
+if [ -f "$FILE" ]; then
+    echo "Rom uses Full Phone, Skipping."
+else 
+    sed -i "s+common_full_phone.mk+common.mk+g" device/nubia/TP1803/${rom_vendor_name}_TP1803.mk
 fi
-    exit 1
-fi
+exit 1
