@@ -10,6 +10,8 @@
 
 3. Make a GitHub token with proper permissions for uploading releases to your repositories.
 
+4. sudo mkdir /mnt/ccache
+
 ## How to use this repo (non-Jenkins)
 
 1. Clone your fork of this repository.
