@@ -35,6 +35,7 @@ if [ "${syncsuccessful}" == "0" ]; then
     rm -rf hardware/qcom-caf/sm8150/audio;rm -rf hardware/qcom-caf/sm8150/display
     git clone https://github.com/aex-tmp/platform_hardware_qcom_audio -b 12.x-caf-sm8150 hardware/qcom-caf/sm8150/audio
     git clone https://github.com/aex-tmp/platform_hardware_qcom_display -b 12.x-caf-sm8150 hardware/qcom-caf/sm8150/display
+    sed -i "s+android.hardware.power-ndk_platform+android.hardware.power-V1-ndk_platform+g" hardware/qcom-caf/sm8150/audio/hal/Android.mk
     FILE=vendor/$rom_vendor_name/config/common_full_phone.mk
     [ -f $FILE ] && echo "$FILE exits, skipping." || sed -i "s+common_full_phone.mk+common.mk+g" device/nubia/TP1803/${rom_vendor_name}_TP1803.mk
     source "${my_dir}/build.sh"
