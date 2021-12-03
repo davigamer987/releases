@@ -77,6 +77,7 @@ if [ "${buildsuccessful}" == "0" ] && [ ! -z "${finalzip_path}" ]; then
 
     github-release "${release_repo}" "${tag}" "master" "${ROM} for ${device}
 
+
 Date: $(env TZ="${timezone}" date)" "${finalzip_path}"
     if [ "${generate_incremental}" == "true" ]; then
         if [ -e "${incremental_zip_path}" ] && [ "${old_target_files_exists}" == "true" ]; then
@@ -127,6 +128,7 @@ Download incremental update: ["incremental_ota_update.zip"]("https://github.com/
             telegram -M "Build completed successfully in $((BUILD_DIFF / 60)) minute(s) and $((BUILD_DIFF % 60)) seconds
 
 Download: ["${zip_name}"]("https://github.com/${release_repo}/releases/download/${tag}/${zip_name}")"
+Gdrive Download: ["${zip_name}"]("https://cloud.invictus.ml/0:/${zip_name}")"
         fi
     fi
 curl --data parse_mode=HTML --data chat_id=$TELEGRAM_CHAT --data sticker=CAADBQADGgEAAixuhBPbSa3YLUZ8DBYE --request POST https://api.telegram.org/bot$TELEGRAM_TOKEN/sendSticker
