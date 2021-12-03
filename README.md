@@ -28,7 +28,7 @@
 
 5. If you haven't ever built Android on your PC, open a terminal in the directory you cloned this repository and run `setup.sh`.
 
-6. Then run `init.sh` from the same folder.
+6. Then run `start.sh` from the same folder.
 
 OR
 
