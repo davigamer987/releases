@@ -32,7 +32,7 @@
 
 OR
 
-5. If you've already built Android on your PC, run `init.sh`.
+5. If you've already built Android on your PC, run `start.sh`.
 
 ## How to use this repo (Jenkins)
 
