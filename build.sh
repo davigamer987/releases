@@ -128,7 +128,7 @@ Download incremental update: ["incremental_ota_update.zip"]("https://github.com/
         else
             telegram -M "Build completed successfully in $((BUILD_DIFF / 60)) minute(s) and $((BUILD_DIFF % 60)) seconds
 
-Download: ["${zip_name}"]("https://github.com/${release_repo}/releases/download/${tag}/${zip_name}")"
+Download: ["${zip_name}"]("https://github.com/${release_repo}/releases/download/${tag}/${zip_name}")
 Gdrive Download: ["${zip_name}"]("https://cloud.invictus.ml/0:/${zip_name}")"
         fi
     fi
