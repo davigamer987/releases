@@ -33,8 +33,8 @@ if [ "${syncsuccessful}" == "0" ]; then
     cd ..
     cd ..
     rm -rf hardware/qcom-caf/sm8150/audio;rm -rf hardware/qcom-caf/sm8150/display
-    git clone https://github.com/aex-tmp/platform_hardware_qcom_audio -b 12.x-caf-sm8150 hardware/qcom-caf/sm8150/audio
-    git clone https://github.com/aex-tmp/platform_hardware_qcom_display -b 12.x-caf-sm8150 hardware/qcom-caf/sm8150/display
+    git clone https://github.com/aospExtended/platform_hardware_qcom_audio -b 12.x-caf-sm8150 hardware/qcom-caf/sm8150/audio
+    git clone https://github.com/aospExtended/platform_hardware_qcom_display -b 12.x-caf-sm8150 hardware/qcom-caf/sm8150/display
     sed -i "s+android.hardware.power-ndk_platform+android.hardware.power-V1-ndk_platform+g" hardware/qcom-caf/sm8150/audio/hal/Android.mk
     cp -R vendor/qcom/opensource/commonsys-intf vendor/qcom/opensource/commonsys
     FILE=vendor/$rom_vendor_name/config/common_full_phone.mk
