@@ -22,6 +22,7 @@ SYNC_END=$(date +"%s")
 SYNC_DIFF=$((SYNC_END - SYNC_START))
 if [ "${syncsuccessful}" == "0" ]; then
     echo "Sync completed successfully in $((SYNC_DIFF / 60)) minute(s) and $((SYNC_DIFF % 60)) seconds"
+    export rom_vendor_name=$(echo vendor/*/config/common.mk |cut -d / -f 2 )
     sed -i "s+android.hardware.power-ndk_platform+android.hardware.power-V1-ndk_platform+g" hardware/qcom-caf/sm8150/audio/hal/Android.mk
     telegram -N -M "Sync completed successfully in $((SYNC_DIFF / 60)) minute(s) and $((SYNC_DIFF % 60)) seconds"
     cd device/nubia/TP1803
