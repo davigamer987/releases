@@ -37,6 +37,8 @@ if [ "${syncsuccessful}" == "0" ]; then
     git clone https://github.com/aospExtended/platform_hardware_qcom_display -b 12.x-caf-sm8150 hardware/qcom-caf/sm8150/display
     sed -i "s+android.hardware.power-ndk_platform+android.hardware.power-V1-ndk_platform+g" hardware/qcom-caf/sm8150/audio/hal/Android.mk
     cp -R vendor/qcom/opensource/commonsys-intf vendor/qcom/opensource/commonsys
+    rm device/tadiphone-fw/fw/abl.elf
+    cp $my_dir/abl.v2.elf device/tadiphone-fw/fw/abl.elf
     FILE=vendor/$rom_vendor_name/config/common_full_phone.mk
     [ -f $FILE ] && echo "$FILE exists, skipping." || sed -i "s+common_full_phone.mk+common.mk+g" device/nubia/TP1803/${rom_vendor_name}_TP1803.mk
     source "${my_dir}/build.sh"
