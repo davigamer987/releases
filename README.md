@@ -1,4 +1,4 @@
-# Build scripts (Adapted for Tadiphon Tp1803 )
+# Buildbot scripts (Adapted for Tadiphon Tp1803 )
 
 **DISCLAIMER**: This is only for Debian-based distributions. WSL is **NOT** supported.
 
