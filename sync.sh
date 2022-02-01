@@ -30,6 +30,8 @@ if [ "${syncsuccessful}" == "0" ]; then
     sed -i "s+lineage+$rom_vendor_name+g" ${rom_vendor_name}_TP1803.mk
     sed -i "s+lineage+$rom_vendor_name+g" AndroidProducts.mk
     echo "BUILD_BROKEN_ENFORCE_SYSPROP_OWNER := true" >> BoardConfig.mk
+    echo "BUILD_BROKEN_MISSING_REQUIRED_MODULES := true " >> BoardConfig.mk
+    echo "BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true" >> BoardConfig.mk
     cd ..
     cd ..
     cd ..
