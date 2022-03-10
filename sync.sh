@@ -45,6 +45,23 @@ if [ "${syncsuccessful}" == "0" ]; then
     cp $my_dir/abl.v2.elf device/tadiphone-fw/fw/abl.elf
     FILE=vendor/$rom_vendor_name/config/common_full_phone.mk
     [ -f $FILE ] && echo "$FILE exists, skipping." || sed -i "s+common_full_phone.mk+common.mk+g" device/nubia/TP1803/${rom_vendor_name}_TP1803.mk
+    
+    #c Rom specific patches
+    
+#c Aex (Aosp Extended) Patches
+
+#c If git is used intead of https, Make it https so the the patches will apply 
+# if [ "$manifest_url" = "git://github.com/AospExtended/manifest" ]; then
+  # export manifest_url="https://github.com/AospExtended/manifest"
+   # fi
+   
+   #c Apply Patches
+   # if [ "$manifest_url" = "https://github.com/AospExtended/manifest" ]; then
+    #c Insert aex patches here (Not done wip)
+# fi
+
+#c End of aex specific patches
+
     source "${my_dir}/build.sh"
 else
     echo "Sync failed in $((SYNC_DIFF / 60)) minute(s) and $((SYNC_DIFF % 60)) seconds (Press F)"
