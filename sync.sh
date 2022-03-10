@@ -46,21 +46,24 @@ if [ "${syncsuccessful}" == "0" ]; then
     FILE=vendor/$rom_vendor_name/config/common_full_phone.mk
     [ -f $FILE ] && echo "$FILE exists, skipping." || sed -i "s+common_full_phone.mk+common.mk+g" device/nubia/TP1803/${rom_vendor_name}_TP1803.mk
     
-    #c Rom specific patches
-    
-#c Aex (Aosp Extended) Patches
+    # Rom specific patches
 
-#c If git is used intead of https, Make it https so the the patches will apply 
-# if [ "$manifest_url" = "git://github.com/AospExtended/manifest" ]; then
-  # export manifest_url="https://github.com/AospExtended/manifest"
-   # fi
+# EvoX (Evolution X) Patches
+
+# If git is used intead of https, Make it https so the the patches will apply 
+ if [ "$manifest_url" = "git://github.com/Evolution-X/manifest" ]; then
+   export manifest_url="https://github.com/Evolution-X/manifest"
+    fi
    
-   #c Apply Patches
-   # if [ "$manifest_url" = "https://github.com/AospExtended/manifest" ]; then
-    #c Insert aex patches here (Not done wip)
-# fi
+   # Apply Patches
+    if [ "$manifest_url" = "https://github.com/Evolution-X/manifest" ]; then
+     cd device/nubia/TP1803
+     # Change sys partition size (Needs sys resize kit, will replace with gapps debloat later)
+    sed -i "s+3221225472+3640655872+g" BoardConfig.mk
+    sed -i "s+55588106240+115601780736+g" BoardConfig.mk
+ fi
 
-#c End of aex specific patches
+# End of EvoX specific patches
 
     source "${my_dir}/build.sh"
 else
