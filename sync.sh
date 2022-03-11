@@ -32,6 +32,9 @@ if [ "${syncsuccessful}" == "0" ]; then
     echo "BUILD_BROKEN_ENFORCE_SYSPROP_OWNER := true" >> BoardConfig.mk
     echo "BUILD_BROKEN_MISSING_REQUIRED_MODULES := true " >> BoardConfig.mk
     echo "BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true" >> BoardConfig.mk
+    echo "TARGET_SCREEN_HEIGHT := 2160" >> ${rom_vendor_name}_TP1803.mk
+    echo "TARGET_SCREEN_WIDTH := 1080" >> ${rom_vendor_name}_TP1803.mk
+    echo "TARGET_BOOT_ANIMATION_RES := 1080" >> ${rom_vendor_name}_TP1803.mk
     cd ..
     cd ..
     cd ..
