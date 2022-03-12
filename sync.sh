@@ -65,6 +65,7 @@ if [ "${syncsuccessful}" == "0" ]; then
      # Change sys partition size (Needs sys resize kit, will replace with gapps debloat later)
     sed -i "s+3221225472+3640655872+g" BoardConfig.mk
     sed -i "s+55588106240+115601780736+g" BoardConfig.mk
+    cd ~/releases/android
  fi
 
 # End of EvoX specific patches
