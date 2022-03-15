@@ -1,6 +1,6 @@
 #!/bin/bash
 export RELAX_USES_LIBRARY_CHECK=true
-export outdir="out/target/product/${device}"
+export outdir="/home/davi/releases/android/out/target/product/${device}"
 BUILD_START=$(date +"%s")
 echo "Build started for ${device}"
 if [ "${jenkins}" == "true" ]; then
