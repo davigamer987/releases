@@ -91,7 +91,6 @@ Date: $(env TZ="${timezone}" date)" "${incremental_zip_path}"
             curl --data parse_mode=HTML --data chat_id=$TELEGRAM_CHAT --data sticker=CAADBQADGgEAAixuhBPbSa3YLUZ8DBYE --request POST https://api.telegram.org/bot$TELEGRAM_TOKEN/sendSticker
             exit 1
         fi
-    fi
     if [ "${upload_recovery}" == "true" ]; then
         if [ -e "${img_path}" ]; then
             github-release ${release_repo} ${tag} master "${ROM} for ${device}"
