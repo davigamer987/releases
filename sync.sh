@@ -70,6 +70,19 @@ if [ "${syncsuccessful}" == "0" ]; then
 
 # End of EvoX specific patches
 
+# Start of pe patches 
+
+    if [ "$manifest_url" = "https://github.com/PixelExperience/manifest" ]; then
+     cd device/nubia/TP1803
+     echo "SELINUX_IGNORE_NEVERALLOWS := true" >> BoardConfig.mk
+     cd sepolicy
+     mkdir private && cd private
+     touch init.te
+     echo "allow init property_type:file { append create getattr map open read relabelto rename setattr unlink write };" >> init.te
+     fi
+
+
+
     source "${my_dir}/build.sh"
 else
     echo "Sync failed in $((SYNC_DIFF / 60)) minute(s) and $((SYNC_DIFF % 60)) seconds (Press F)"
