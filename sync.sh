@@ -78,7 +78,9 @@ if [ "${syncsuccessful}" == "0" ]; then
      cd sepolicy
      mkdir private && cd private
      touch init.te
+     cp $my_dir/genfs_contexts genfs_contexts
      echo "allow init property_type:file { append create getattr map open read relabelto rename setattr unlink write };" >> init.te
+     cd ~/releases/android
      fi
 
 
