@@ -80,7 +80,7 @@ if [ "${buildsuccessful}" == "0" ] && [ ! -z "${finalzip_path}" ]; then
     github-release "${release_repo}" "${tag}" "master" "${ROM} for ${device}
     echo "Uploading to gdrive"
     echo ${finalzip_path}
-    gdrive upload $finalzip_path
+    gdrive upload ${finalzip_path}
 
 Date: $(env TZ="${timezone}" date)" "${finalzip_path}"
     if [ "${generate_incremental}" == "true" ]; then
