@@ -57,8 +57,10 @@ if [ "${generate_incremental}" == "true" ]; then
 fi
 if [ -e "${outdir}"/*$(date +%Y)*.zip ]; then
     echo "using date sys"
+    export outdir=/home/davi/releases/android/out/target/product/TP1803
     export finalzip_path=$(ls ${outdir}/*$(date +%Y)*.zip | tail -n -1)
 else
+    export outdir=/home/davi/releases/android/out/target/product/TP1803
     echo "using device sys $(pwd)"
     export finalzip_path=$(ls ${outdir}/*"${device}"*.zip | grep -E 'UNOFFICIAL|unofficial' | tail -n -1)
 fi
@@ -74,7 +76,7 @@ if [ "${buildsuccessful}" == "0" ] && [ ! -z "${finalzip_path}" ]; then
     echo "Build completed successfully in $((BUILD_DIFF / 60)) minute(s) and $((BUILD_DIFF % 60)) seconds"
 
     echo "Uploading"
-
+    echo "Final zip path: ${finalzip_path}"
     github-release "${release_repo}" "${tag}" "master" "${ROM} for ${device}
     echo "Uploading to gdrive"
     echo ${finalzip_path}
