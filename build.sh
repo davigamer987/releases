@@ -36,8 +36,22 @@ elif [ "${clean}" == "installclean" ]; then
 else
     rm "${outdir}"/*$(date +%Y)*.zip*
 fi
+export buildon=true
 m "${bacon}" -j$(nproc --all)
 buildsuccessful="${?}"
+
+while [ "$buildon" = "true" ]
+do  
+   export num1=$(protoc --decode_raw < ~/releases/android/out/build_progress.pb | cut -c 4- | head -1)
+   export num2=$(protoc --decode_raw < ~/releases/android/out/build_progress.pb | cut -b 4-  | head -n 2 | tail -n 1)
+   echo "scale=2 ; $num1 / $num2*100" | bc > tmpmath
+   export per=$(cat tmpmath)
+   curl --data parse_mode=HTML --data chat_id=$TELEGRAM_CHAT --data message_id=553 --data text=$per+% --request POST https://api.telegram.org/bot$TELEGRAM_TOKEN/editMessageText
+   rm tmpmath
+  sleep 170  
+done
+export buildon=false
+curl --data parse_mode=HTML --data chat_id=$TELEGRAM_CHAT --data message_id=553 --data text=No_Build --request POST https://api.telegram.org/bot$TELEGRAM_TOKEN/editMessageText
 BUILD_END=$(date +"%s")
 BUILD_DIFF=$((BUILD_END - BUILD_START))
 
