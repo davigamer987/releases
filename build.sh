@@ -44,9 +44,11 @@ while [ "$buildon" = "true" ]
 do  
    num1=$(protoc --decode_raw < ~/releases/android/out/build_progress.pb | cut -c 4- | head -1)
    num2=$(protoc --decode_raw < ~/releases/android/out/build_progress.pb | cut -b 4-  | head -n 2 | tail -n 1)
-   export per="$(echo "scale=2; $num1 / $num2*100" | bc)"
+   export per="$(echo "scale=2; $num2 / $num1*100" | bc)"
    curl --data parse_mode=HTML --data chat_id=$TELEGRAM_CHAT --data message_id=553 --data text=$per+% --request POST https://api.telegram.org/bot$TELEGRAM_TOKEN/editMessageText
-   [ "$num1" = "$num2" ] && break
+   if [ "$num1" = "$num2" ]; then
+     break
+   fi
   sleep 170  
 done
 export buildon=false
