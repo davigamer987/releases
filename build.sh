@@ -60,10 +60,10 @@ if [ "${generate_incremental}" == "true" ]; then
 fi
 if [ -e "${outdir}"/*$(date +%Y)*.zip ]; then
     echo "using date sys"
-    export outdir=/home/davi/releases/android/out/target/product/TP1803
+    export outdir=/home/davi/releases/android/out/target/product/guacamole
     export finalzip_path=$(ls ${outdir}/*$(date +%Y)*.zip | tail -n -1)
 else
-    export outdir=/home/davi/releases/android/out/target/product/TP1803
+    export outdir=/home/davi/releases/android/out/target/product/guacamole
     echo "using device sys $(pwd)"
     export finalzip_path=$(ls ${outdir}/*"${device}"*.zip | grep -E 'UNOFFICIAL|unofficial' | tail -n -1)
 fi
