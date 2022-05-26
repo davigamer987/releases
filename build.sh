@@ -58,14 +58,12 @@ if [ "${generate_incremental}" == "true" ]; then
     fi
     cp "${new_target_files_path}" "${ROM_DIR}"
 fi
-if [ -e "${outdir}"/*$(date +%Y)*.zip ]; then
-    echo "using date sys"
-    export outdir=/home/davi/releases/android/out/target/product/TP1803
-    export finalzip_path=$(ls ${outdir}/*$(date +%Y)*.zip | tail -n -1)
-else
-    export outdir=/home/davi/releases/android/out/target/product/TP1803
+    cd /home/davi/releases/android/out/target/product/TP1803
     echo "using device sys $(pwd)"
-    export finalzip_path=$(ls ${outdir}/*"${device}"*.zip | grep -E 'UNOFFICIAL|unofficial' | tail -n -1)
+    export zip_name=$(find -type f -name "*${device}*.zip" -exec stat -c '%Y %n' {} \; | sort -nr | head -n 20 | awk 'NR==1,NR==1 {print $2}')
+    export zip_name=$(basename "${rom_name}")
+    export finalzip_path="/home/davi/releases/android/out/target/product/${device}/${zip_name}"
+    ROM_SIZE=$(ls -lh "${finalzip_path}" | cut -f5 -d " ")
 fi
 if [ "${upload_recovery}" == "true" ]; then
     if [ ! -e "${outdir}"/recovery.img ]; then
@@ -73,16 +71,16 @@ if [ "${upload_recovery}" == "true" ]; then
     fi
     export img_path=$(ls "${outdir}"/recovery.img | tail -n -1)
 fi
-export zip_name=$(echo "${finalzip_path}" | sed "s|${outdir}/||")
 export tag=$( echo "$(date +%Y%m%d%H%M)-${zip_name}" | sed 's|.zip||')
 if [ "${buildsuccessful}" == "0" ] && [ ! -z "${finalzip_path}" ]; then
     echo "Build completed successfully in $((BUILD_DIFF / 60)) minute(s) and $((BUILD_DIFF % 60)) seconds"
 
     echo "Uploading"
+    GH_TAG="${ROM}-${ROM_VERSION}-${device}-$(date +"%Y-%m-%d")"
     echo "Final zip path: ${finalzip_path}"
+    gh release create "${GH_TAG}" -t "${ROM}-${device}: $(date +"%Y-%m-%d")" -n "New Build for ${device}" "${ROM_ZIP}"
     github-release "${release_repo}" "${tag}" "master" "${ROM} for ${device}
     echo "Uploading to gdrive"
-    echo ${finalzip_path}
     echo ${finalzip_path} > newf.txt
     gdrive upload ${finalzip_path}
 
@@ -134,7 +132,9 @@ Download: ["${zip_name}"]("https://github.com/${release_repo}/releases/download/
 Download incremental update: ["incremental_ota_update.zip"]("https://github.com/${release_repo}/releases/download/${tag}/incremental_ota_update.zip")"
         else
             telegram -M "Build completed successfully in $((BUILD_DIFF / 60)) minute(s) and $((BUILD_DIFF % 60)) seconds
-
+👤 by @davigamer987
+📅 Build date: $(date +"%d-%m-%Y")
+📎 File size: ${ROM_SIZE}
 Download: ["${zip_name}"]("https://github.com/${release_repo}/releases/download/${tag}/${zip_name}")
 Gdrive Download: ["${zip_name}"]("https://drive.realmeme.ml/0:/${zip_name}")"
         fi
