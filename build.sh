@@ -64,7 +64,6 @@ fi
     export zip_name=$(basename "${rom_name}")
     export finalzip_path="/home/davi/releases/android/out/target/product/${device}/${zip_name}"
     ROM_SIZE=$(ls -lh "${finalzip_path}" | cut -f5 -d " ")
-fi
 if [ "${upload_recovery}" == "true" ]; then
     if [ ! -e "${outdir}"/recovery.img ]; then
         cp "${outdir}"/boot.img "${outdir}"/recovery.img
