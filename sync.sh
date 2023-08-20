@@ -34,7 +34,7 @@ if [ "${syncsuccessful}" == "0" ]; then
     cd ..
     cd ..
     FILE=vendor/$rom_vendor_name/config/common_full_phone.mk
-    [ -f $FILE ] && echo "$FILE exists, skipping." || sed -i "s+common_full_phone.mk+common.mk+g" device/nubia/TP1803/${rom_vendor_name}_eqs.mk
+    [ -f $FILE ] && echo "$FILE exists, skipping." || sed -i "s+common_full_phone.mk+common.mk+g" device/motorola/eqs/${rom_vendor_name}_eqs.mk
     
 # Patch: Pick needed commits for eqs
 
