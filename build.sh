@@ -1,5 +1,8 @@
 #!/bin/bash
-export RELAX_USES_LIBRARY_CHECK=true
+export USE_CCACHE=1
+export CCACHE_EXEC=/usr/bin/ccache
+export CCACHE_DIR=/mnt/ccache
+ccache -M 50G -F 0
 export outdir="/home/davi/releases/android/out/target/product/${device}"
 BUILD_START=$(date +"%s")
 echo "Build started for ${device}"
@@ -80,9 +83,6 @@ if [ "${buildsuccessful}" == "0" ] && [ ! -z "${finalzip_path}" ]; then
     echo "Final zip path: ${finalzip_path}"
     gh release create "${GH_TAG}" -t "${ROM}-${device}: $(date +"%Y-%m-%d")" -n "New Build for ${device}" "${ROM_ZIP}"
     github-release "${release_repo}" "${tag}" "master" "${ROM} for ${device}
-    echo "Uploading to gdrive"
-    echo ${finalzip_path} > newf.txt
-    gdrive upload ${finalzip_path}
 
 Date: $(env TZ="${timezone}" date)" "${finalzip_path}"
     if [ "${generate_incremental}" == "true" ]; then

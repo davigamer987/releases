@@ -23,70 +23,39 @@ SYNC_DIFF=$((SYNC_END - SYNC_START))
 if [ "${syncsuccessful}" == "0" ]; then
     echo "Sync completed successfully in $((SYNC_DIFF / 60)) minute(s) and $((SYNC_DIFF % 60)) seconds"
     export rom_vendor_name=$(echo vendor/*/config/common.mk |cut -d / -f 2 )
-    sed -i "s+android.hardware.power-ndk_platform+android.hardware.power-V1-ndk_platform+g" hardware/qcom-caf/sm8150/audio/hal/Android.mk
     telegram -N -M "Sync completed successfully in $((SYNC_DIFF / 60)) minute(s) and $((SYNC_DIFF % 60)) seconds"
-    cd device/nubia/TP1803
-    rm -rf BoardConfig.mk
-    wget https://raw.githubusercontent.com/LineageOS/android_device_nubia_TP1803/8ed059568ddb4888fdee13c1c24614aa84ca2ea9/BoardConfig.mk
-    mv lineage_TP1803.mk ${rom_vendor_name}_TP1803.mk
-    sed -i "s+lineage+$rom_vendor_name+g" ${rom_vendor_name}_TP1803.mk
+
+# Adapt Tree
+    cd device/motorola/eqs
+    mv lineage_eqs.mk ${rom_vendor_name}_eqs.mk
+    sed -i "s+lineage+$rom_vendor_name+g" ${rom_vendor_name}_eqs.mk
     sed -i "s+lineage+$rom_vendor_name+g" AndroidProducts.mk
-    echo "BUILD_BROKEN_ENFORCE_SYSPROP_OWNER := true" >> BoardConfig.mk
-    echo "BUILD_BROKEN_MISSING_REQUIRED_MODULES := true " >> BoardConfig.mk
-    echo "BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true" >> BoardConfig.mk
-    echo "BUILD_BROKEN_DUP_RULES := true" >> BoardConfig.mk
-    echo "TARGET_SCREEN_HEIGHT := 2160" >> ${rom_vendor_name}_TP1803.mk
-    echo "TARGET_SCREEN_WIDTH := 1080" >> ${rom_vendor_name}_TP1803.mk
-    echo "TARGET_BOOT_ANIMATION_RES := 1080" >> ${rom_vendor_name}_TP1803.mk
     cd ..
     cd ..
     cd ..
-    rm -rf hardware/qcom-caf/sm8150/audio;rm -rf hardware/qcom-caf/sm8150/display
-    git clone https://github.com/aospExtended/platform_hardware_qcom_audio -b 12.x-caf-sm8150 hardware/qcom-caf/sm8150/audio
-    git clone https://github.com/aospExtended/platform_hardware_qcom_display -b 12.x-caf-sm8150 hardware/qcom-caf/sm8150/display
-    sed -i "s+android.hardware.power-ndk_platform+android.hardware.power-V1-ndk_platform+g" hardware/qcom-caf/sm8150/audio/hal/Android.mk
-    cp -R vendor/qcom/opensource/commonsys-intf vendor/qcom/opensource/commonsys
-    export RELAX_USES_LIBRARY_CHECK=true
-    rm device/tadiphone-fw/fw/abl.elf
-    cp $my_dir/abl.v2.elf device/tadiphone-fw/fw/abl.elf
     FILE=vendor/$rom_vendor_name/config/common_full_phone.mk
-    [ -f $FILE ] && echo "$FILE exists, skipping." || sed -i "s+common_full_phone.mk+common.mk+g" device/nubia/TP1803/${rom_vendor_name}_TP1803.mk
+    [ -f $FILE ] && echo "$FILE exists, skipping." || sed -i "s+common_full_phone.mk+common.mk+g" device/nubia/TP1803/${rom_vendor_name}_eqs.mk
     
-    # Rom specific patches
+# Patch: Pick needed commits for eqs
 
-# EvoX (Evolution X) Patches
-
-# If git is used intead of https, Make it https so the the patches will apply 
- if [ "$manifest_url" = "git://github.com/Evolution-X/manifest" ]; then
-   export manifest_url="https://github.com/Evolution-X/manifest"
-    fi
-   
-   # Apply Patches
-    if [ "$manifest_url" = "https://github.com/Evolution-X/manifest" ]; then
-     cd device/nubia/TP1803
-     # Change sys partition size (Needs sys resize kit, will replace with gapps debloat later)
-    sed -i "s+3221225472+3640655872+g" BoardConfig.mk
-    sed -i "s+55588106240+115601780736+g" BoardConfig.mk
-    cd ~/releases/android
- fi
-
-# End of EvoX specific patches
-
-# Start of pe patches 
-
-    if [ "$manifest_url" = "https://github.com/PixelExperience/manifest" ]; then
-     cd device/nubia/TP1803
-     echo "SELINUX_IGNORE_NEVERALLOWS := true" >> BoardConfig.mk
-     cd sepolicy
-     mkdir private && cd private
-     touch init.te
-     echo "allow init property_type:file { append create getattr map open read relabelto rename setattr unlink write };" >> init.te
-     cd .. && cd vendor
-     cp $my_dir/genfs_contexts genfs_contexts
-     cd ~/releases/android
-     fi
-
-
+cd frameworks/opt/telephony
+    git fetch https://github.com/LineageOS/android_frameworks_opt_telephony refs/changes/38/349338/1 && git cherry-pick FETCH_HEAD
+    git fetch https://github.com/LineageOS/android_frameworks_opt_telephony refs/changes/39/349339/1 && git cherry-pick FETCH_HEAD
+    git fetch https://github.com/LineageOS/android_frameworks_opt_telephony refs/changes/40/349340/1 && git cherry-pick FETCH_HEAD
+    git fetch https://github.com/LineageOS/android_frameworks_opt_telephony refs/changes/41/349341/1 && git cherry-pick FETCH_HEAD
+    git fetch https://github.com/LineageOS/android_frameworks_opt_telephony refs/changes/42/349342/1 && git cherry-pick FETCH_HEAD
+    git fetch https://github.com/LineageOS/android_frameworks_opt_telephony refs/changes/43/349343/1 && git cherry-pick FETCH_HEAD
+    git fetch https://github.com/LineageOS/android_frameworks_opt_telephony refs/changes/44/349344/1 && git cherry-pick FETCH_HEAD
+cd ..
+cd ..
+cd av
+    git fetch https://github.com/LineageOS/android_frameworks_av refs/changes/60/342860/2 && git cherry-pick FETCH_HEAD
+    git fetch https://github.com/LineageOS/android_frameworks_av refs/changes/61/342861/2 && git cherry-pick FETCH_HEAD
+    git fetch https://github.com/LineageOS/android_frameworks_av refs/changes/62/342862/4 && git cherry-pick FETCH_HEAD
+    git fetch https://github.com/LineageOS/android_frameworks_av refs/changes/63/342863/4 && git cherry-pick FETCH_HEAD
+    git fetch https://github.com/LineageOS/android_frameworks_av refs/changes/64/342864/2 && git cherry-pick FETCH_HEAD
+cd ..
+cd ..
 
     source "${my_dir}/build.sh"
 else
