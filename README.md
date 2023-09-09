@@ -1,4 +1,4 @@
-# Buildbot scripts (Adapted for Tadiphon Tp1803 )
+# Buildbot scripts (Adapted for eqs)
 
 **DISCLAIMER**: This is only for Debian-based distributions. WSL is **NOT** supported.
 
