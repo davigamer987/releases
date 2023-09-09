@@ -51,8 +51,6 @@ cd ..
 cd av
     git fetch https://github.com/LineageOS/android_frameworks_av refs/changes/60/342860/2 && git cherry-pick FETCH_HEAD
     git fetch https://github.com/LineageOS/android_frameworks_av refs/changes/61/342861/2 && git cherry-pick FETCH_HEAD
-    git fetch https://github.com/LineageOS/android_frameworks_av refs/changes/62/342862/4 && git cherry-pick FETCH_HEAD
-    git fetch https://github.com/LineageOS/android_frameworks_av refs/changes/63/342863/4 && git cherry-pick FETCH_HEAD
     git fetch https://github.com/LineageOS/android_frameworks_av refs/changes/64/342864/2 && git cherry-pick FETCH_HEAD
 cd ..
 cd ..
